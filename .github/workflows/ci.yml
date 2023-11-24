@@ -1,0 +1,45 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: build image
+        id: build
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+          IMAGE_NAME: todo-list
+          IMAGE_TAG: latest
+          SHA7: ${GITHUB_SHA:7}
+          CONTAINER_IMAGE: ${DOCKER_USER}/${IMAGE_NAME}:${SHA7}
+        run: |
+          docker pull $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG || true
+          docker build \
+            --cache-from $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG \
+            --build-arg VCS_REF=$SHA7 \
+            --build-arg IS_PRODUCTION=true \
+            -t $CONTAINER_IMAGE .
