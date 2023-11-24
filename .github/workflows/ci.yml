@@ -35,7 +35,7 @@ jobs:
           IMAGE_NAME: todo-list
           IMAGE_TAG: latest
           SHA7: ${GITHUB_SHA::7}
-          CONTAINER_IMAGE: "${{DOCKER_USER}}/${{IMAGE_NAME}}:${{SHA7}}"
+          CONTAINER_IMAGE: ${{DOCKER_USER}}/${{IMAGE_NAME}}:${{SHA7}}
         run: |
           echo $DOCKER_USER
           echo "$SHA7"
