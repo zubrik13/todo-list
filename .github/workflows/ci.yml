@@ -37,9 +37,9 @@ jobs:
           SHA7: ${GITHUB_SHA:7}
           CONTAINER_IMAGE: $DOCKER_USER/$IMAGE_NAME:$SHA7
         run: |
-          docker pull $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG || true
+          docker pull ${{ env.$DOCKER_USER }}/${{ env.IMAGE_NAME}}:${{ env.IMAGE_TAG }} || true
           docker build \
-            --cache-from $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG \
-            --build-arg VCS_REF=$SHA7 \
+            --cache-from ${{ env.$DOCKER_USER }}/${{ env.IMAGE_NAME}}:${{ env.IMAGE_TAG }} \
+            --build-arg VCS_REF=${{ env.SHA7 }} \
             --build-arg IS_PRODUCTION=true \
-            -t $CONTAINER_IMAGE .
+            -t ${{ env.CONTAINER_IMAGE }} .
