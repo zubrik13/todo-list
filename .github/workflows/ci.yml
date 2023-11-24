@@ -38,7 +38,8 @@ jobs:
           CONTAINER_IMAGE: $DOCKER_USER/$IMAGE_NAME:$SHA7
         run: |
           echo $DOCKER_USER
-          echo $SHA7
+          echo "$SHA7"
+          echo "$CONTAINER_IMAGE"
           echo "$DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG"
 #          docker pull $$DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG || true
 #          docker build \
