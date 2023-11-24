@@ -36,8 +36,10 @@ jobs:
           IMAGE_TAG: latest
           SHA7: ${GITHUB_SHA::7}
         run: |
-          echo $DOCKER_USER
+          echo "DOCKER_USER: ${{ env.DOCKER_USER }}"
           echo "$SHA7"
+          echo "GITHUB_SHA: ${GITHUB_SHA}"
+          echo "SHA7: ${GITHUB_SHA::7}"
           echo "$DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG"
           echo "$DOCKER_USER/$IMAGE_NAME:$SHA7"
 #          docker pull $$DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG || true
