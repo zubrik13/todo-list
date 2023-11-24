@@ -35,7 +35,7 @@ jobs:
           IMAGE_NAME: todo-list
           IMAGE_TAG: latest
           SHA7: ${GITHUB_SHA:7}
-          CONTAINER_IMAGE: ${DOCKER_USER}/${IMAGE_NAME}:${SHA7}
+          CONTAINER_IMAGE: $DOCKER_USER/$IMAGE_NAME:$SHA7
         run: |
           docker pull $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG || true
           docker build \
